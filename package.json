@@ -21,8 +21,15 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.82.0",
+    "framer-motion": "^12.6.3",
     "next": "^15.2.4",
+    "next-sanity": "^9.9.9",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-parallax-tilt": "^1.7.289",
+    "sanity": "^3.82.0",
+    "styled-components": "^6.1.17"
   }
 }
