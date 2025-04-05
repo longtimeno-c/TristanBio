@@ -2,13 +2,20 @@
 
 import Navbar from '@/components/Navbar'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { FaGithub, FaInstagram, FaXTwitter, FaLinkedin } from 'react-icons/fa6'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { FaGithub, FaXTwitter } from 'react-icons/fa6'
 
 const EMOJIS = ['👋', '🤖', '💻', '🧠', '⚡', '🔥', '🎧', '🚀', '🛠️', '🧰', '👨‍💻', '📡', '🕹️', '🤘', '🧪', '📟', '💡', '🔧', '🎮', '🧱']
 
+const TOOLBOX = ['Node.js', 'TypeScript', 'React', 'Next.js', 'Tailwind', 'Framer Motion', 'GraphQL', 'Docker', 'PostgreSQL', 'Python', 'AI/ML', 'NDI', 'WebSockets']
+
 export default function Home() {
   const [emoji, setEmoji] = useState('👋')
+
+  useEffect(() => {
+    console.log('%cHey dev, nice inspect element 👀', 'color: #6366f1; font-size: 16px;')
+  }, [])
 
   const handleHover = () => {
     let count = 0
@@ -25,7 +32,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex items-center justify-center flex-col gap-6 px-4 text-center">
+      <main className="min-h-screen flex flex-col items-center justify-center gap-10 px-4 py-12 text-center">
+        {/* Hero */}
         <motion.h1
           className="text-5xl font-extrabold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent flex items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
@@ -50,47 +58,77 @@ export default function Home() {
           I build cool stuff with Node.js, AI, TypeScript, and coffee.
         </motion.p>
 
-        {/* Social Icons */}
+        {/* Live Event Section */}
         <motion.div
-          className="flex gap-6 mt-8"
+          className="bg-indigo-100 dark:bg-indigo-900 px-4 py-2 rounded-xl text-indigo-800 dark:text-indigo-200"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
+          🎙 <strong>Stream150:</strong> Not live right now – see you soon!
+        </motion.div>
+
+        {/* Featured Projects Teaser */}
+        <motion.div
+          className="w-full max-w-2xl mt-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.3 }}
+        >
+          <h2 className="text-2xl font-bold mb-4">⚡ Featured Projects</h2>
+          <div className="grid sm:grid-cols-2 gap-6 text-left">
+            {/* Dummy projects - link to actual project page */}
+            <ProjectCard title="Missile Wars" desc="Fast-paced multiplayer game with WebSockets & strategy." />
+            <ProjectCard title="Stream150" desc="Live stream toolkit, automation, and chaos. Built from scratch." />
+          </div>
+        </motion.div>
+
+         {/* Socials */}
+         <motion.div
+          className="flex gap-6 mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+        >
           <SocialLink href="https://github.com/longtimeno-c" icon={<FaGithub />} label="GitHub" />
-          {/* <SocialLink href="https://instagram.com/YOUR_USERNAME" icon={<FaInstagram />} label="Instagram" /> */}
           <SocialLink href="https://x.com/ReTristanHill" icon={<FaXTwitter />} label="X" />
-          {/* <SocialLink href="https://linkedin.com/in/YOUR_USERNAME" icon={<FaLinkedin />} label="LinkedIn" /> */}
         </motion.div>
       </main>
     </>
   )
 }
 
-// Social Link Component
-function SocialLink({
-    href,
-    icon,
-    label,
-  }: {
-    href: string
-    icon: React.ReactNode
-    label: string
-  }) {
-    return (
-      <motion.a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={label}
-        className="text-3xl text-gray-600 dark:text-gray-300 hover:text-indigo-500 transition"
-        whileHover={{
-          scale: 1.2,
-          textShadow: '0px 0px 8px rgba(99, 102, 241, 0.8)',
-        }}
+// Social Icon
+function SocialLink({ href, icon, label }: { href: string, icon: React.ReactNode, label: string }) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="text-3xl text-gray-600 dark:text-gray-300 hover:text-indigo-500 transition"
+      whileHover={{
+        scale: 1.2,
+        textShadow: '0px 0px 8px rgba(99, 102, 241, 0.8)',
+      }}
+    >
+      {icon}
+    </motion.a>
+  )
+}
+
+// Project Card
+function ProjectCard({ title, desc }: { title: string; desc: string }) {
+  return (
+    <Link href="/projects" passHref>
+      <motion.div
+        className="cursor-pointer p-4 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition"
+        whileHover={{ y: -4 }}
       >
-        {icon}
-      </motion.a>
-    )
-  }
-  
+        <h3 className="text-lg font-bold mb-1 text-indigo-600 dark:text-indigo-400">{title}</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{desc}</p>
+      </motion.div>
+    </Link>
+  )
+}
+
