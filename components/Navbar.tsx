@@ -11,7 +11,7 @@ export default function Navbar() {
         <Link href="/" className="text-white hover:underline">Home</Link>
         <Link href="/about" className="text-white hover:underline">About</Link>
         <Link href="/projects" className="text-white hover:underline">Projects</Link>
-        <Link href="/studio" className="text-white hover:underline">CMS</Link>
+        {/* <Link href="/studio" className="text-white hover:underline">CMS</Link> */}
 
         <DarkModeToggle />
       </div>
