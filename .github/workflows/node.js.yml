@@ -13,39 +13,47 @@ jobs:
       NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
 
     steps:
-      - name: Checkout code
+      - name: 📦 Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 🧰 Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: 📥 Install dependencies
         run: npm ci
 
-      - name: Build Next.js app
+      - name: 🏗️ Build Next.js app
         run: npx next build
 
-      - name: Set up SSH
+      - name: 🔐 Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy .next folder to VPS
+      - name: 🚀 Deploy .next folder to VPS
         run: |
-          echo "Deploying .next to ${{ secrets.VPS_HOST }}..."
+          echo "🔍 Deploying .next to ${{ secrets.VPS_HOST }} as ${{ secrets.VPS_USER }}"
 
-          # Make sure the folder exists
+          echo "📁 Listing current directory..."
+          pwd
+          ls -la
+
+          echo "✅ Verifying .next exists..."
+          if [ ! -d ".next" ]; then
+            echo "❌ .next folder not found! Build may have failed."
+            exit 1
+          fi
+
+          echo "📂 Creating /TristanBio/.next on VPS..."
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /TristanBio/.next"
 
-          # Upload the .next folder
-          echo "Uploading .next..."
-          scp -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/TristanBio/
+          echo "📤 Uploading .next..."
+          scp -v -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/TristanBio/
 
-          # Restart with PM2
-          echo "Restarting app with PM2..."
+          echo "♻️ Restarting app with PM2..."
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd /TristanBio
             pm2 restart TristanBio || pm2 start npm --name "TristanBio" -- start
