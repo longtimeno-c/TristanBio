@@ -1,11 +1,11 @@
-name: Build Next.js App
+name: Build & Deploy
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     env:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -25,15 +25,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
+      - name: Build Next.js app
         run: npx next build
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          name: nextjs-build
-          path: |
-            .next
-            public
-            package.json
-            next.config.js
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to VPS
+        run: |
+          echo "Deploying to ${{ secrets.VPS_HOST }}"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /home/youruser/yourapp
+            rm -rf .next public
+            mkdir -p .next public
+          EOF
+
+          scp -r .next public package.json next.config.js tsconfig.json ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/youruser/yourapp/
+
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /home/youruser/yourapp
+            npm install --production
+            pm2 restart TristanBio || pm2 start npm --name "TristanBio" -- start
+          EOF
