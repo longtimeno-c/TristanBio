@@ -47,15 +47,15 @@ jobs:
             exit 1
           fi
 
-          echo "📂 Creating /TristanBio/.next on VPS..."
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /TristanBio/.next"
+          echo "📂 Creating /root/TristanBio/.next on VPS..."
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /root/TristanBio/.next"
 
-          echo "📤 Uploading .next..."
-          scp -v -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/TristanBio/
+          echo "📤 Uploading .next to /root/TristanBio/..."
+          scp -v -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/root/TristanBio/
 
           echo "♻️ Restarting app with PM2..."
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /TristanBio
+            cd /root/TristanBio
             pm2 restart TristanBio || pm2 start npm --name "TristanBio" -- start
           EOF
 
