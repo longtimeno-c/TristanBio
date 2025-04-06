@@ -1,4 +1,3 @@
-# .github/workflows/nextjs.yml
 name: Build Next.js App
 
 on:
@@ -8,6 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID }}
+      # Add other secrets here if needed
 
     steps:
       - name: Checkout code
