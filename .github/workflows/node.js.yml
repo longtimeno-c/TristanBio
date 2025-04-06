@@ -35,10 +35,20 @@ jobs:
 
       - name: Deploy .next folder to VPS
         run: |
-          echo "Deploying .next to ${{ secrets.VPS_HOST }}"
+          echo "Deploying .next to ${{ secrets.VPS_HOST }}..."
 
-          # Ensure target directory exists
+          # Make sure the folder exists
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /TristanBio/.next"
 
-          # Upload only the .next folder to the server
+          # Upload the .next folder
+          echo "Uploading .next..."
           scp -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/TristanBio/
+
+          # Restart with PM2
+          echo "Restarting app with PM2..."
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /TristanBio
+            pm2 restart TristanBio || pm2 start npm --name "TristanBio" -- start
+          EOF
+
+          echo "✅ Deploy complete!"
