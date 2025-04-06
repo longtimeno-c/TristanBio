@@ -33,19 +33,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to VPS
+      - name: Deploy .next folder to VPS
         run: |
-          echo "Deploying to ${{ secrets.VPS_HOST }}"
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /home/youruser/yourapp
-            rm -rf .next public
-            mkdir -p .next public
-          EOF
+          echo "Deploying .next to ${{ secrets.VPS_HOST }}"
 
-          scp -r .next public package.json next.config.js tsconfig.json ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/youruser/yourapp/
+          # Ensure target directory exists
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /TristanBio/.next"
 
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /home/youruser/yourapp
-            npm install --production
-            pm2 restart TristanBio || pm2 start npm --name "TristanBio" -- start
-          EOF
+          # Upload only the .next folder to the server
+          scp -r .next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/TristanBio/
