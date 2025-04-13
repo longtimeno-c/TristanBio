@@ -9,6 +9,7 @@ type Project = {
   description: string
   link: string
   tech: string[]
+  mainImage?: any
   source?: 'sanity' | 'github'
 }
 
@@ -24,9 +25,10 @@ export default function Projects() {
           title,
           description,
           link,
-          tech
+          tech,
+          mainImage
         }`
-      )
+      )      
 
       const githubRes = await fetch('https://api.github.com/users/longtimeno-c/repos')
       const githubData = await githubRes.json()

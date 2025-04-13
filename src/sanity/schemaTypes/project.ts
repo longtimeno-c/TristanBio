@@ -24,5 +24,13 @@ export default {
       type: 'array',
       of: [{ type: 'string' }],
     },
+    {
+      name: 'mainImage',
+      title: 'Main Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }    
   ],
 }
