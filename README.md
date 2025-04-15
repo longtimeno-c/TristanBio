@@ -1,6 +1,6 @@
 # 🧠 Tristan's Dev Portfolio
 
-Welcome to my portfolio site — a clean, modern, and animated developer bio built with 💻 **Next.js 14**, 🎨 **TailwindCSS**, 🧠 **Sanity CMS**, and 🌀 **Framer Motion**.
+Welcome to my portfolio site — a clean, modern, and animated developer bio built with 💻 **Next.js 15**, 🎨 **TailwindCSS**, 🧠 **Sanity CMS**, and 🌀 **Framer Motion**.
 
 This site is where I show off my work, talk a bit about what I’m into, and wave at visitors like a polite nerd emoji.
 
@@ -17,6 +17,8 @@ This site is where I show off my work, talk a bit about what I’m into, and wav
 - ✨ **Framer Motion animations** on emojis, icons, and page elements
 - 🔗 **Social links** with hover glow effects
 - ❌ Custom 404 page that still looks cooler than 90% of real websites
+- 📸 **Image galleries** with interactive concept art and development timelines
+- 🔄 **Live content updates** using Sanity's experimental live API
 
 ---
 
@@ -31,8 +33,8 @@ This site is where I show off my work, talk a bit about what I’m into, and wav
 | Sanity CMS   | Headless CMS to manage project content   |
 | GitHub API   | Live fetch of public repos (Projects)    |
 | React Icons  | Beautiful, easy-to-use icon library      |
-
----
-
-## 🧱 Folder Structure
+| Node.js      | Backend runtime for server-side logic    |
+| WebSockets   | Real-time communication for multiplayer  |
+| Prisma       | Database ORM for structured data         |
+| Styled Components | CSS-in-JS for dynamic styling       |
 
