@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add global transition for theme changes */
+:root {
+  --theme-transition-duration: 0.4s;
+}
+
+html {
+  transition: color var(--theme-transition-duration) ease,
+              background-color var(--theme-transition-duration) ease;
+}
+
+html * {
+  transition: background-color var(--theme-transition-duration) ease,
+              border-color var(--theme-transition-duration) ease,
+              color var(--theme-transition-duration) ease,
+              fill var(--theme-transition-duration) ease,
+              stroke var(--theme-transition-duration) ease,
+              box-shadow var(--theme-transition-duration) ease;
+}
+
+/* Prevent flashing during page load */
+html.transitioning * {
+  transition: none !important;
+}
+
 body {
   @apply bg-white text-black dark:bg-black dark:text-white;
 }

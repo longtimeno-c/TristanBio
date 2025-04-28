@@ -8,6 +8,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setMounted(true)
+    
+    // Handle transitions when switching pages
+    document.documentElement.classList.add('transitioning');
+    setTimeout(() => {
+      document.documentElement.classList.remove('transitioning');
+    }, 50);
   }, [])
 
   return (
@@ -23,6 +29,24 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* Optional: Apple and other formats */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        
+        {/* Dark mode initialization script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                // Default to dark mode unless explicitly set to light
+                const theme = localStorage.getItem('theme');
+                if (theme === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                  localStorage.setItem('theme', 'dark');
+                }
+              })()
+            `,
+          }}
+        />
       </Head>
       {mounted && <Component {...pageProps} />}
     </>
