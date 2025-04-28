@@ -93,7 +93,7 @@ export default function About() {
             <section className="w-full max-w-6xl mx-auto">
               <div className="py-8 border-t border-gray-200 dark:border-gray-700 mb-10"></div>
               
-              <h2 className="text-5xl font-bold mb-14 text-center bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              <h2 className="text-5xl font-bold mb-14 pb-4 text-center bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 🔧 Currently Working On
               </h2>
 

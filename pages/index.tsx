@@ -40,12 +40,12 @@ export default function Home() {
         {/* Hero */}
         <div className="space-y-6">
           <motion.h1
-            className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent flex items-center gap-2 relative z-10 justify-center"
+            className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent inline-flex items-center gap-2 relative z-10"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Hi, I'm Tristan{' '}
+            <span className="whitespace-nowrap">Hi, I'm Tristan</span>{' '}
             <motion.span
               className="inline-block origin-[70%_70%] cursor-pointer"
               onMouseEnter={handleHover}
