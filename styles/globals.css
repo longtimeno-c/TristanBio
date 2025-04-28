@@ -10,6 +10,7 @@
 html {
   transition: color var(--theme-transition-duration) ease,
               background-color var(--theme-transition-duration) ease;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 html * {
@@ -27,5 +28,28 @@ html.transitioning * {
 }
 
 body {
-  @apply bg-white text-black dark:bg-black dark:text-white;
+  @apply bg-white text-black dark:bg-black dark:text-white overflow-x-hidden;
+}
+
+/* Fix for gradient containers on iPad */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .gradient-bg {
+    background-attachment: scroll !important;
+    background-size: 100% 100% !important;
+  }
+  
+  /* Ensure responsive padding on iPad */
+  .container-padding {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+/* Fix for iPad Safari gradient rendering */
+@supports (-webkit-touch-callout: none) {
+  .bg-gradient-to-b,
+  .bg-gradient-to-r {
+    background-attachment: scroll;
+    background-size: 100% 100%;
+  }
 }

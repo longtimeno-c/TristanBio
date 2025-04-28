@@ -75,30 +75,30 @@ export default function MissileWars() {
     return (
         <div className="overflow-x-hidden">
             <Navbar />
-            <main className="dark:bg-gradient-to-b dark:from-gray-900 dark:via-slate-900 dark:to-slate-800 relative">
+            <main className="pt-32 pb-20 dark:bg-gradient-to-b dark:from-gray-900 dark:via-slate-900 dark:to-slate-800 relative">
                 {/* Ambient glow effects for dark mode */}
                 <div className="absolute top-20 left-1/4 w-1/2 h-1/2 bg-red-500/20 dark:block hidden blur-[150px] rounded-full pointer-events-none"></div>
                 <div className="absolute top-80 right-1/4 w-1/3 h-1/3 bg-amber-500/20 dark:block hidden blur-[120px] rounded-full pointer-events-none"></div>
                 
-                <div className="relative z-10">
+                <div className="relative z-10 px-4 sm:px-6">
                     {/* Hero */}
                     <motion.section
-                        className="text-center mb-6"
+                        className="text-center mb-20"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
+                        <h1 className="text-5xl sm:text-6xl font-bold mb-8 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent inline-block pb-3 border-b-2 border-orange-300/30 dark:border-orange-500/30">
                             Missile Wars Revival
                         </h1>
-                        <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+                        <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
                             A fast-paced multiplayer game powered by WebSockets and strategy.
                         </p>
                     </motion.section>
 
                     {/* About the Project */}
                     <motion.section
-                        className="max-w-4xl mx-auto mb-10 text-center"
+                        className="max-w-4xl mx-auto mb-24 text-center"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
@@ -109,7 +109,7 @@ export default function MissileWars() {
                     </motion.section>
 
                     {/* Timeline Grid */}
-                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 timeline-section">
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 timeline-section mb-16">
                         <motion.div
                             className="relative h-[50vh] lg:h-[65vh] rounded-xl overflow-hidden shadow-2xl cursor-pointer"
                             layoutId="main-image"
@@ -160,7 +160,7 @@ export default function MissileWars() {
 
                     {/* Stage Details */}
                     <motion.section
-                        className="max-w-7xl mx-auto mt-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                        className="max-w-7xl mx-auto mt-8 mb-16 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
@@ -213,7 +213,7 @@ export default function MissileWars() {
 
                     {/* Tech Stack */}
                     <motion.section
-                        className="max-w-7xl mx-auto mt-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                        className="max-w-7xl mx-auto mt-8 mb-16 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
@@ -235,7 +235,7 @@ export default function MissileWars() {
                     </motion.section>
 
                     {/* Developer Notes */}
-                    <motion.details className="max-w-4xl mx-auto mt-4 bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-xl text-sm">
+                    <motion.details className="max-w-4xl mx-auto mt-8 mb-20 bg-indigo-50 dark:bg-indigo-900/30 p-6 rounded-xl text-sm">
                         <summary className="cursor-pointer font-semibold text-indigo-700 dark:text-indigo-300">
                             Developer Notes (Click to expand)
                         </summary>
@@ -248,15 +248,15 @@ export default function MissileWars() {
 
                     {/* Concept Art Section */}
                     <motion.section
-                        className="max-w-7xl mx-auto mt-16 mb-8"
+                        className="max-w-7xl mx-auto mt-24 mb-16"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        <h2 className="text-4xl font-bold mb-10 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                             Concept Art & Design
                         </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             {conceptArtData.map((concept) => (
                                 <motion.div
                                     key={concept.id}
@@ -322,7 +322,7 @@ export default function MissileWars() {
                     </motion.section>
 
                     {/* Credits */}
-                    <motion.section className="text-center text-sm text-gray-500 mt-8 mb-4">
+                    <motion.section className="text-center text-sm text-gray-500 mt-12 mb-8">
                         <p>Concept art by community contributors. Multiplayer testing by the early player community.</p>
                     </motion.section>
                 </div>

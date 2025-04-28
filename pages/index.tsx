@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen flex flex-col items-center justify-center gap-10 px-4 py-12 text-center bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-gray-900 dark:via-slate-900 dark:to-slate-800 relative">
+      <main className="min-h-screen flex flex-col items-center justify-center gap-10 px-4 py-12 text-center bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-gray-900 dark:via-slate-900 dark:to-slate-800 relative gradient-bg container-padding">
         {/* Ambient glow effects for both light and dark mode */}
         <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-indigo-500/5 dark:bg-indigo-500/20 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 bg-purple-500/5 dark:bg-purple-500/20 blur-[100px] rounded-full pointer-events-none"></div>
