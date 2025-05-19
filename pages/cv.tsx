@@ -42,10 +42,10 @@ export const experiences: Experience[] = [
         period: '2025 - Present',
         description: 'Leading development of geospatial applications while managing a global development team.',
         highlights: [
-            'Managing a global development team across multiple time zones',
-            'Architecting and implementing geospatial applications',
-            'Working with TypeScript, React Native, and AI technologies',
-            'Optimizing team collaboration and project workflows'
+            'Creating an online platform for tutoring and educational resources',
+            'Video calling and screensharing across multiple platforms',
+            'Expo web app used to allow page switching while on a call',
+            'Payment intergration with Stripe for billing and payment processing',
         ],
         tech: ['TypeScript', 'React Native', 'Node.js', 'Expo', 'DailyCo']
     },
