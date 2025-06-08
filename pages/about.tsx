@@ -38,7 +38,7 @@ export default function About() {
         {/* Ambient glow effects for both light and dark mode */}
         <div className="absolute top-1/3 left-1/3 w-1/2 h-1/2 bg-blue-500/5 dark:bg-blue-500/20 blur-[120px] rounded-full pointer-events-none"></div>
         <div className="absolute bottom-1/3 right-1/4 w-1/3 h-1/3 bg-violet-500/5 dark:bg-violet-500/20 blur-[100px] rounded-full pointer-events-none"></div>
-        
+
         {/* Content container - now using flex layout for better structure */}
         <div className="relative z-10 flex flex-col items-center">
           {/* Bio sections container - narrower for better readability */}
@@ -49,8 +49,7 @@ export default function About() {
                 About Me
               </h1>
               <p className="text-xl text-gray-700 dark:text-gray-300">
-                I'm Tristan — a developer, streamer, and aspiring world-changer. I build things with code, caffeine, and stubborn optimism.
-                Right now, I'm balancing the chaos of streaming platforms, geospatial apps, and surviving A-levels.
+                I'm Tristan — a developer, tutor, and tinkerer obsessed with building clever things from scratch. I run multiple projects, from geospatial games to AI-driven platforms, and still somehow survive A-levels (barely). Whether it's deploying a multi-VC streaming platform or debugging WebRTC in a mobile app, I'm here for the chaos — and the tea.
               </p>
             </section>
 
@@ -59,11 +58,11 @@ export default function About() {
                 🧠 What I'm Into
               </h2>
               <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 space-y-3">
-                <li>Building real-time apps with Node.js, TypeScript, and WebSockets</li>
-                <li>AI and machine learning, especially for weather prediction (because chaos needs order)</li>
-                <li>Streaming: OBS wizardry, automation, multi-cam setups, and interactive challenges</li>
-                <li>Learning how to turn ideas into products — one GitHub commit at a time</li>
-                <li>Making the internet more fun and slightly more chaotic</li>
+                <li>Real-time systems with TypeScript, Node.js, WebSockets, and React Native</li>
+                <li>AI for weather forecasting using Graph Neural Networks (GNNs) — because storms should come with warnings, not surprises</li>
+                <li>Streaming automation with OBS, NDI, and custom plugins for replays and camera control</li>
+                <li>Ed-tech and tutoring platforms with scheduling, payment systems, and video calling</li>
+                <li>Running a Delaware LLC for my game company (One Studio One Game, LLC)</li>
               </ul>
             </section>
 
@@ -72,8 +71,9 @@ export default function About() {
                 🧪 Recent Projects
               </h2>
               <p className="text-gray-700 dark:text-gray-300">
-                I recently completed a 150-hour livestream challenge called <strong>Stream150</strong> — a tech marathon involving five PCs, OBS plugins, donation-triggered chaos, and 10Gb networking.
-                I also led development for a geospatial app under my company <em>One Studio One Game, LLC</em>, and continue to maintain several open source tools.
+                I built a geospatial mobile game called <strong>Missile Wars</strong> (now paused) that let players launch digital missiles at real-world locations.
+                I also ran <strong>Stream150</strong>, a 150-hour livestream with 10+ people, five PCs, and interactive chaos powered by donations.
+                Lately, I’ve been building a full-stack tutoring platform with payment integration, scheduling, and Daily.co-based video calls.
               </p>
             </section>
 
@@ -82,17 +82,17 @@ export default function About() {
                 🌍 Outside the Code
               </h2>
               <p className="text-gray-700 dark:text-gray-300">
-                When I'm not debugging or deploying something ridiculous, I'm probably exploring weird tech, playing Helldivers,
-                or binging a sci-fi show. (Andor is elite, and you know it.)
+                When I'm not coaching swimmers, deploying WebRTC calls, or arguing with TypeScript, I’m probably rewatching <em>Andor</em>, grinding Helldivers, or plotting my escape to Western Australia.
+                Also: never underestimate the power of a stupid idea executed well.
               </p>
             </section>
           </div>
-          
+
           {/* "Currently Working On" Section - wider layout, separate from bio sections */}
           {currentWorkItems.length > 0 && (
             <section className="w-full max-w-6xl mx-auto">
               <div className="py-8 border-t border-gray-200 dark:border-gray-700 mb-10"></div>
-              
+
               <h2 className="text-5xl font-bold mb-14 pb-4 text-center bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 🔧 Currently Working On
               </h2>
