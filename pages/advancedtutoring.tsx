@@ -10,97 +10,138 @@ const timelineData = [
     { 
         id: 1, 
         title: 'Access Code System',
-        description: 'Secure invitation-based registration with JWT authentication and role management',
-        tech: ['Node.js', 'PostgreSQL', 'JWT'],
+        description: 'Invitation-based registration using secure access codes with email verification',
+        tech: ['Node.js', 'JWT', 'JSON Storage'],
         phase: 'Authentication'
     },
     { 
         id: 2, 
         title: 'User Management',
-        description: 'Role-based admin dashboard with tutor approval workflow and student management',
+        description: 'Multiple user roles: Admin, Tutor, Pupil, and Parent with specialized permissions',
         tech: ['React', 'TypeScript', 'Redux'],
         phase: 'Core Features'
     },
     { 
         id: 3, 
         title: 'Role-Based Dashboards',
-        description: 'Custom interfaces for each user role with tailored functionality and analytics',
+        description: 'Custom interfaces for each user role with dark/light mode support',
         tech: ['Next.js', 'TailwindCSS', 'React Query'],
         phase: 'UI/UX'
     },
     { 
         id: 4, 
-        title: 'Real-time Messaging',
-        description: 'WebSocket-powered chat with Firebase notifications and read receipts',
-        tech: ['WebSocket', 'Firebase', 'Redis'],
+        title: 'Communication System',
+        description: 'Direct messaging, video calls, and system notifications with Socket.IO',
+        tech: ['WebSocket', 'Socket.IO', 'Push Notifications'],
         phase: 'Communication'
     },
     { 
         id: 5, 
         title: 'Calendar Integration',
-        description: 'Advanced scheduling with recurring sessions and conflict detection',
-        tech: ['FullCalendar', 'date-fns', 'React DnD'],
+        description: 'Advanced scheduling with recurring sessions, conflict detection, and iCal export',
+        tech: ['FullCalendar', 'date-fns', 'iCal'],
         phase: 'Scheduling'
     },
     { 
         id: 6, 
         title: 'Progress Tracking',
-        description: 'Detailed student progress analytics and session logging system',
-        tech: ['Chart.js', 'PostgreSQL', 'Redux'],
-        phase: 'Analytics'
+        description: 'Notes system and activity logs to track tutoring progress and development',
+        tech: ['Chart.js', 'JSON Storage', 'Redux'],
+        phase: 'Tutoring Tools'
     },
     { 
         id: 7, 
-        title: 'Payment Integration',
-        description: 'Multi-provider payment processing with automated billing',
-        tech: ['Stripe', 'PayPal', 'Prisma'],
+        title: 'Financial Management',
+        description: 'Payment tracking, service charges, and detailed financial reporting',
+        tech: ['Payment APIs', 'Financial Reports', 'Receipts'],
         phase: 'Payments'
     },
     { 
         id: 8, 
         title: 'Mobile Development',
-        description: 'Cross-platform mobile app with native features',
-        tech: ['React Native', 'Expo', 'Firebase'],
+        description: 'Cross-platform React Native app for web, iOS, and Android',
+        tech: ['React Native', 'Expo', 'Push Notifications'],
         phase: 'Mobile'
+    },
+    {
+        id: 9,
+        title: 'Admin Tools',
+        description: 'User management, access code generation, and system monitoring',
+        tech: ['Admin Dashboard', 'Analytics', 'User Management'],
+        phase: 'Administration'
     }
 ]
 
 // Key features of the platform
 const features = [
     {
-        title: 'Invitation-Based Access',
-        description: 'Secure, admin-approved registration system with unique access codes for students',
+        title: 'Multiple User Roles',
+        description: 'Admin, Tutor, Pupil, and Parent roles with specific permissions and interfaces',
+        icon: '👥'
+    },
+    {
+        title: 'Access Code System',
+        description: 'Invitation-based registration system with secure code generation and management',
         icon: '🔒'
     },
     {
-        title: 'Real-time Communication',
-        description: 'Instant messaging, notifications, and read tracking powered by WebSocket',
+        title: 'Comprehensive Communication',
+        description: 'Messaging, video calls, notifications, and real-time updates with Socket.IO',
         icon: '💬'
     },
     {
         title: 'Advanced Scheduling',
-        description: 'Smart calendar with recurring sessions and conflict detection',
+        description: 'Calendar with recurring sessions, rescheduling requests and iCal integration',
         icon: '📅'
     },
     {
-        title: 'Progress Analytics',
-        description: 'Detailed tracking of student progress with visual analytics',
-        icon: '📊'
-    },
-    {
-        title: 'Multi-Provider Payments',
-        description: 'Integrated Stripe and PayPal with automated billing',
+        title: 'Financial Tools',
+        description: 'Payment tracking, service charges, reports and receipt generation',
         icon: '💳'
     },
     {
-        title: 'Cross-platform',
-        description: 'Native mobile apps and responsive web interface',
+        title: 'Cross-Platform',
+        description: 'Web platform plus native mobile apps for iOS and Android via React Native',
         icon: '🌐'
     },
     {
-        title: 'Role-Based Access',
-        description: 'Tailored dashboards for administrators, tutors, and students',
-        icon: '🎓'
+        title: 'Tutoring Progress Tools',
+        description: 'Notes system, activity logs and student development tracking',
+        icon: '📊'
+    },
+    {
+        title: 'Parent-Child Accounts',
+        description: 'Parents can manage and oversee their children\'s tutoring activities',
+        icon: '👨‍👧‍👦'
+    }
+]
+
+// User flow steps
+const userFlowSteps = [
+    {
+        step: 1,
+        title: 'Admin creates tutor access codes',
+        description: 'Platform administrators generate secure invitation codes for tutors'
+    },
+    {
+        step: 2,
+        title: 'Tutors register with codes',
+        description: 'Tutors use the access codes to create accounts with verification'
+    },
+    {
+        step: 3,
+        title: 'Tutors generate student codes',
+        description: 'Registered tutors create access codes for their pupils'
+    },
+    {
+        step: 4, 
+        title: 'Students register with codes',
+        description: 'Pupils use tutor-provided codes to create their accounts'
+    },
+    {
+        step: 5,
+        title: 'Email verification',
+        description: 'If enabled, users must verify their email before accessing full features'
     }
 ]
 
