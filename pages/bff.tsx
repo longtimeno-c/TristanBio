@@ -126,8 +126,8 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
         {profileImage && (
           <div className="profile-image-container">
             <Image
-              src={urlFor(profileImage).width(300).height(300).url()}
-              alt="Tristan Hill - Profile Picture"
+              src={urlFor(profileImage).url()} // Simplified src
+              alt="Tristan - Profile Picture"
               width={150}
               height={150}
               objectFit="cover"
@@ -199,7 +199,7 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
               {galleryImages.map((image, index) => (
                 <div key={index} className="gallery-image-container">
                   <Image
-                    src={urlFor(image).width(360).height(360).url()}
+                    src={urlFor(image).url()} // Simplified src
                     alt={`Gallery image ${index + 1}`}
                     width={180}
                     height={180}
@@ -254,7 +254,7 @@ export async function getStaticProps() {
     const imageData = await sanity.fetch(`
       *[_type == "bffPageAssets" && identifier == "tristan-hill-bff"][0] {
         profilePicture,
-        gallery[]
+        gallery
       }
     `);
 
