@@ -1,6 +1,7 @@
 import project from './project'
 import current from './current'
+import bffPageAssets from './bffPageAssets' 
 
 export const schema = {
-  types: [project, current], // ← this must include all your document types
+  types: [project, current, bffPageAssets], 
 }
