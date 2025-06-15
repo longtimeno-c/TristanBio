@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import { sanity } from '../src/sanity/lib/client'
 import { urlFor } from '../src/sanity/lib/sanityImage'; 
 
@@ -10,6 +10,17 @@ interface BoyfriendResumePageProps {
 }
 
 const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage, galleryImages }) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showAllGalleryImages, setShowAllGalleryImages] = useState(false);
+
+  const initialImageCount = 3;
+
+  const openImageModal = (imageUrl: string) => setSelectedImage(imageUrl);
+  const closeImageModal = () => setSelectedImage(null);
+  const toggleShowAllGalleryImages = () => setShowAllGalleryImages(!showAllGalleryImages);
+
+  const displayedGalleryImages = showAllGalleryImages ? galleryImages : galleryImages?.slice(0, initialImageCount);
+
   return (
     <>
       <Head>
@@ -115,6 +126,65 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
             object-fit: cover;
             width: 100%;
             height: 100%;
+            cursor: pointer;
+          }
+          .show-more-less-button {
+            background-color: #00796b; /* Dark Teal */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .show-more-less-button:hover {
+            background-color: #004d40; /* Very Dark Teal */
+          }
+          .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+          .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+          }
+          .modal-image {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            margin: 0 auto;
+          }
+          .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         `}</style>
       </Head>
@@ -161,14 +231,12 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
 
         <h2><span className="emoji" role="img" aria-label="popcorn">🍿</span> Extras:</h2>
         <ul>
-          <li>10/10 back-scratcher and hug-giver <span className="emoji" role="img" aria-label="hugging face">🤗</span></li>
+          <li>10/10 back-scratcher and hug-giver</li>
           <li>Fluent in sarcasm, with minor qualifications in bad dance moves</li>
-          <li>Can fix tech issues and open jam jars – rare dual class</li>
-          <li>Consistently chooses you in games that allow it (yes, even Overcooked)</li>
-          <li>Will offer you the last fry (unless it’s curly)</li>
-          <li>Can swim in open water and help carry shopping bags in one trip</li>
-          <li>Won’t ghost – replies quickly and shows up when it matters</li>
-          <li>Gets along with parents, friends, and possibly dogs <span className="emoji" role="img" aria-label="dog">🐕</span></li>
+          <li>Will offer you the last chip with my fish and chips</li>
+          <li>Will help carry shopping bags in one trip</li>
+          <li>Won’t ghost – replies embarassingly quickly (although can end up spending hours offline working) and shows up when it matters</li>
+          <li>Gets along with parents, friends, and dogs <span className="emoji" role="img" aria-label="dog">🐕</span></li>
           <li>Big on honesty, effort, and cuddles</li>
           <li>Bonus: I’ve got a really nice smile (or so I’ve been told)</li>
         </ul>
@@ -177,13 +245,13 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
         <ul>
           <li>Emotional availability pre-installed</li>
           <li>No ex drama, shady past, or hidden playlists of sad break-up songs</li>
-          <li>Regular software updates: I believe in growth, communication, and asking, "How can I be better?"</li>
-          <li>Occasional bugs: might get moody when hungry, but nothing a snack can't fix</li>
+          <li>Regular software updates: I believe in growth, communication, and asking, "How can we be better?"</li>
+          <li>Occasional bugs: might get moody when hungry, but nothing a good snack can't fix</li>
         </ul>
 
         <h2><span className="emoji" role="img" aria-label="tools">🛠</span> Maintenance Notes:</h2>
         <ul>
-          <li>Recharge with gym, swimming, or a cuddle</li>
+          <li>Recharge with gym, swimming, or a hot cuddle</li>
           <li>Feed regularly (burgers, sushi, or pasta preferred)</li>
           <li>Occasionally needs to be told to slow down and just relax</li>
           <li>Thrives on affirmations, touch, and shared Spotify playlists <span className="emoji" role="img" aria-label="music notes">🎶</span></li>
@@ -193,8 +261,12 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
           <>
             <h2><span className="emoji" role="img" aria-label="camera">📸</span> Photo Highlights:</h2>
             <div className="gallery-container">
-              {galleryImages.map((image, index) => (
-                <div key={index} className="gallery-image-container">
+              {displayedGalleryImages && displayedGalleryImages.map((image, index) => (
+                <div 
+                  key={index} 
+                  className="gallery-image-container"
+                  onClick={() => openImageModal(urlFor(image).url())}
+                >
                   <img
                     src={urlFor(image).width(180).height(180).url()}
                     alt={`Gallery image ${index + 1}`}
@@ -203,12 +275,26 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
                 </div>
               ))}
             </div>
+            {galleryImages.length > initialImageCount && (
+              <button onClick={toggleShowAllGalleryImages} className="show-more-less-button">
+                {showAllGalleryImages ? 'Show Less' : `Show More (${galleryImages.length - initialImageCount} more)`}
+              </button>
+            )}
           </>
+        )}
+
+        {selectedImage && (
+          <div className="modal-overlay" onClick={closeImageModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close-button" onClick={closeImageModal}>&times;</button>
+              <img src={selectedImage} alt="Enlarged gallery view" className="modal-image" />
+            </div>
+          </div>
         )}
 
         <h2><span className="emoji" role="img" aria-label="speech bubble">💬</span> Testimonials:</h2>
         <p>"Makes a mean hot chocolate and even better conversation." – My Nan probably</p>
-        <p>"10/10 coach and even better person." – Someone I probably helped swim faster</p>
+        <p>"Such a great guy" - My English teacher I suppose</p>
         <p>"Didn’t expect to fall for the guy who brings snacks to movie night, but here we are." – Future you?</p>
 
         <h2><span className="emoji" role="img" aria-label="pen">📝</span> Why Choose Me?</h2>
@@ -219,14 +305,14 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
           or just because it’s Tuesday and you deserve flowers. <span className="emoji" role="img" aria-label="bouquet">💐</span>
         </p>
 
-        <p><strong>Looking for:</strong> Someone kind, fun, open-minded, and ready for something with epic potential. <span className="emoji" role="img" aria-label="star-struck">🤩</span></p>
+        <p><strong>Looking for:</strong> Someone kind, fun, open-minded, and laid back. <span className="emoji" role="img" aria-label="star-struck">🤩</span></p>
         <p><strong>Not looking for:</strong> Games (unless it’s Mario Kart, in which case, prepare to lose <span className="emoji" role="img" aria-label="nail polish">💅</span>)</p>
 
         <p className="footer-text">
-          So… want to do life together, one laugh, gym sesh, or late-night swim at a time?
+          So… what did you think? is there potential here? <span className="emoji" role="img" aria-label="thinking">🤔</span>
         </p>
         <p className="footer-text">
-          Let’s make it something special. <span className="emoji" role="img" aria-label="star">🌟</span>
+          Your future boyfriend...
         </p>
         <p className="signature">
           – Tristan <span style={{ color: '#007bff' }}>💙</span>
