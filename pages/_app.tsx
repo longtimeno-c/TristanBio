@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Tristan's Portfolio</title>
-        <meta name="description" content="Software dev, stream challenge guy, and all-around legend. Explore my work, code, and chaos." />
+        <meta name="description" content="Software dev, and all-around legend. Explore my work, code, and chaos." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0f172a" />
 

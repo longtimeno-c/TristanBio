@@ -12,6 +12,9 @@ interface BoyfriendResumePageProps {
 const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage, galleryImages }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showAllGalleryImages, setShowAllGalleryImages] = useState(false);
+  const [responderName, setResponderName] = useState('');
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [submissionMessage, setSubmissionMessage] = useState('');
 
   const initialImageCount = 3;
 
@@ -20,6 +23,32 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
   const toggleShowAllGalleryImages = () => setShowAllGalleryImages(!showAllGalleryImages);
 
   const displayedGalleryImages = showAllGalleryImages ? galleryImages : galleryImages?.slice(0, initialImageCount);
+
+  const handleDecision = async (decision: 'approved' | 'denied') => {
+    if (!responderName.trim()) {
+      setSubmissionStatus('error');
+      setSubmissionMessage('Please enter your name before submitting.');
+      return;
+    }
+    setSubmissionStatus('submitting');
+    setSubmissionMessage('');
+    try {
+      await sanity.create({
+        _type: 'bffResponse',
+        name: responderName.trim(),
+        decision: decision,
+        submittedAt: new Date().toISOString(),
+        applicant: 'tristan-hill-bff', // Make sure this matches an identifier if you have multiple BFF pages
+      });
+      setSubmissionStatus('success');
+      setSubmissionMessage(`Thank you, ${responderName.trim()}! Your decision has been recorded.`);
+      setResponderName(''); // Clear name after successful submission
+    } catch (error) {
+      console.error('Failed to submit decision to Sanity:', error);
+      setSubmissionStatus('error');
+      setSubmissionMessage('Sorry, there was an error submitting your decision. Please try again.');
+    }
+  };
 
   return (
     <>
@@ -186,11 +215,62 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
             justify-content: center;
             align-items: center;
           }
+          .decision-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #b2dfdb; /* Light Teal separator */
+          }
+          .decision-section h2 {
+            margin-bottom: 20px;
+          }
+          .name-input {
+            padding: 10px;
+            border: 2px solid #00796b; /* Dark Teal border */
+            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            width: calc(100% - 24px); /* Adjust for padding and border */
+            max-width: 400px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .decision-buttons button {
+            background-color: #00796b; /* Dark Teal */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+          }
+          .decision-buttons button.approve:hover {
+            background-color: #004d40; /* Very Dark Teal for approve hover */
+          }
+          .decision-buttons button.deny {
+            background-color: #d32f2f; /* Red for deny */
+          }
+          .decision-buttons button.deny:hover {
+            background-color: #b71c1c; /* Darker Red for deny hover */
+          }
+          .submission-message {
+            margin-top: 20px;
+            font-size: 1em;
+          }
+          .submission-message.success {
+            color: #004d40; /* Very Dark Teal for success */
+          }
+          .submission-message.error {
+            color: #d32f2f; /* Red for error */
+          }
         `}</style>
       </Head>
       <div className="container">
         <span className="header-emoji" role="img" aria-label="letter">📨</span>
-        <h1>Application – Tristan</h1>
+        <h1>Boyfriend Application</h1>
 
         {profileImage && (
           <div className="profile-image-container">
@@ -315,8 +395,44 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
           Your future boyfriend...
         </p>
         <p className="signature">
-          – Tristan <span style={{ color: '#007bff' }}>💙</span>
+          – Tristan
         </p>
+
+        {/* Decision Section */}
+        <div className="decision-section">
+          <h2><span className="emoji" role="img" aria-label="ballot box">🗳️</span> Your Verdict:</h2>
+          {submissionStatus !== 'success' && (
+            <>
+              <input 
+                type="text"
+                placeholder="Your Name"
+                className="name-input"
+                value={responderName}
+                onChange={(e) => setResponderName(e.target.value)}
+                disabled={submissionStatus === 'submitting'}
+              />
+              <div className="decision-buttons">
+                <button 
+                  onClick={() => handleDecision('approved')} 
+                  disabled={submissionStatus === 'submitting' || !responderName.trim()}
+                  className="approve"
+                >
+                  {submissionStatus === 'submitting' ? 'Submitting...' : 'Approve'}
+                </button>
+                <button 
+                  onClick={() => handleDecision('denied')} 
+                  disabled={submissionStatus === 'submitting' || !responderName.trim()}
+                  className="deny"
+                >
+                  {submissionStatus === 'submitting' ? 'Submitting...' : 'Deny'}
+                </button>
+              </div>
+            </>
+          )}
+          {submissionMessage && (
+            <p className={`submission-message ${submissionStatus}`}>{submissionMessage}</p>
+          )}
+        </div>
       </div>
     </>
   );
