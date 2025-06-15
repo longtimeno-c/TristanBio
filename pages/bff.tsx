@@ -303,31 +303,59 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* Above modal */
-            pointer-events: none; /* Allow clicks through */
+            z-index: 2000;
+            pointer-events: none;
+            overflow: hidden;
           }
           .animation-icon {
-            font-size: 150px;
+            font-size: 200px; /* Increased size */
             opacity: 0;
-            transform: scale(0.5);
-            animation: fadeInScaleUp 0.5s forwards, fadeOut 0.5s 3.5s forwards; /* Total 4s */
+            /* transform: scale(0.3) rotate(-30deg); // Initial state handled by animation start */
+            animation: stampInSwirl 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOutSwirl 0.6s 3.4s forwards; /* Adjusted timing */
           }
           .animation-icon.approved {
-            color: #4CAF50; /* Green for approved */
+            color: #2f855a; /* Darker, richer green */
+            text-shadow: 
+              0 0 10px rgba(72, 187, 120, 0.5),
+              0 0 20px rgba(72, 187, 120, 0.7),
+              0 0 30px rgba(72, 187, 120, 0.9),
+              0 0 5px #fff; /* Brighter inner glow */
           }
           .animation-icon.denied {
-            color: #F44336; /* Red for denied */
+            color: #c53030; /* Darker, richer red */
+            text-shadow:
+              0 0 10px rgba(229, 62, 62, 0.5),
+              0 0 20px rgba(229, 62, 62, 0.7),
+              0 0 30px rgba(229, 62, 62, 0.9),
+              0 0 5px #fff; /* Brighter inner glow */
           }
-          @keyframes fadeInScaleUp {
-            to {
+
+          @keyframes stampInSwirl {
+            0% {
+              opacity: 0;
+              transform: translateX(-200px) translateY(-200px) scale(0.2) rotate(-270deg); /* Start off-screen, small, heavily rotated */
+            }
+            60% {
               opacity: 1;
-              transform: scale(1);
+              transform: translateX(30px) translateY(30px) scale(1.2) rotate(15deg); /* Overshoot with swirl */
+            }
+            80% {
+              transform: translateX(-10px) translateY(-10px) scale(0.9) rotate(-5deg); /* Bounce back */
+            }
+            100% {
+              opacity: 1;
+              transform: translateX(0) translateY(0) scale(1) rotate(0deg); /* Settle */
             }
           }
-          @keyframes fadeOut {
-            to {
+
+          @keyframes fadeOutSwirl {
+            0% {
+              opacity: 1;
+              transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
               opacity: 0;
-              transform: scale(0.8);
+              transform: translateX(150px) translateY(-100px) scale(0.3) rotate(180deg); /* Swirl out and fade */
             }
           }
         `}</style>
@@ -388,6 +416,7 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
           <li>10/10 back-scratcher and hug-giver</li>
           <li>Fluent in sarcasm, with minor qualifications in bad dance moves</li>
           <li>Will offer you the last chip with my fish and chips</li>
+          <li>Friends with Christian Veirling</li>
           <li>Will help carry shopping bags in one trip</li>
           <li>Won’t ghost – replies embarassingly quickly (although can end up spending hours offline working) and shows up when it matters</li>
           <li>Gets along with parents, friends, and dogs <span className="emoji" role="img" aria-label="dog">🐕</span></li>
