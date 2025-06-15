@@ -15,6 +15,7 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
   const [responderName, setResponderName] = useState('');
   const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [submissionMessage, setSubmissionMessage] = useState('');
+  const [animationType, setAnimationType] = useState<'approved' | 'denied' | null>(null);
 
   const initialImageCount = 3;
 
@@ -27,26 +28,41 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
   const handleDecision = async (decision: 'approved' | 'denied') => {
     if (!responderName.trim()) {
       setSubmissionStatus('error');
-      setSubmissionMessage('Please enter your name before submitting.');
+      setSubmissionMessage('Please enter your name. It\'s kinda important for this!');
+      // Clear any previous animation
+      setAnimationType(null);
       return;
     }
     setSubmissionStatus('submitting');
     setSubmissionMessage('');
+    setAnimationType(null);
+
     try {
       await sanity.create({
         _type: 'bffResponse',
         name: responderName.trim(),
         decision: decision,
         submittedAt: new Date().toISOString(),
-        applicant: 'tristan-hill-bff', // Make sure this matches an identifier if you have multiple BFF pages
+        applicant: 'tristan-hill-bff',
       });
       setSubmissionStatus('success');
-      setSubmissionMessage(`Thank you, ${responderName.trim()}! Your decision has been recorded.`);
-      setResponderName(''); // Clear name after successful submission
+      setSubmissionMessage(`Thank you, ${responderName.trim()}! Your decision (${decision}) has been recorded.`);
+      setAnimationType(decision); // Trigger animation
+      setResponderName('');
+
+      // Reset animation after a delay
+      setTimeout(() => {
+        setAnimationType(null);
+        // Optionally reset submission status to allow another submission, or hide form
+        // setSubmissionStatus('idle'); 
+        // setSubmissionMessage('');
+      }, 4000); // Animation + message display time
+
     } catch (error) {
       console.error('Failed to submit decision to Sanity:', error);
       setSubmissionStatus('error');
-      setSubmissionMessage('Sorry, there was an error submitting your decision. Please try again.');
+      setSubmissionMessage('Oops! Something went wrong. Please try again.');
+      setAnimationType(null);
     }
   };
 
@@ -234,6 +250,16 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
             display: block;
             margin-left: auto;
             margin-right: auto;
+            color: #004d40; /* Added: Very Dark Teal for text visibility */
+            background-color: #fff; /* Added: Explicit white background */
+          }
+          .name-input::placeholder {
+            color: #00796b; /* Dark Teal for placeholder */
+            opacity: 0.7; /* Slightly lighter placeholder */
+          }
+          .name-input.error {
+            border-color: #d32f2f;
+            box-shadow: 0 0 5px rgba(211, 47, 47, 0.5);
           }
           .decision-buttons button {
             background-color: #00796b; /* Dark Teal */
@@ -265,9 +291,57 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
           }
           .submission-message.error {
             color: #d32f2f; /* Red for error */
+            font-weight: bold;
+          }
+          /* Animation Styles */
+          .animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Above modal */
+            pointer-events: none; /* Allow clicks through */
+          }
+          .animation-icon {
+            font-size: 150px;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: fadeInScaleUp 0.5s forwards, fadeOut 0.5s 3.5s forwards; /* Total 4s */
+          }
+          .animation-icon.approved {
+            color: #4CAF50; /* Green for approved */
+          }
+          .animation-icon.denied {
+            color: #F44336; /* Red for denied */
+          }
+          @keyframes fadeInScaleUp {
+            to {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+          @keyframes fadeOut {
+            to {
+              opacity: 0;
+              transform: scale(0.8);
+            }
           }
         `}</style>
       </Head>
+
+      {/* Animation Overlay */}
+      {animationType && (
+        <div className="animation-container">
+          <div className={`animation-icon ${animationType}`}>
+            {animationType === 'approved' ? '✔' : '✖'}
+          </div>
+        </div>
+      )}
+
       <div className="container">
         <span className="header-emoji" role="img" aria-label="letter">📨</span>
         <h1>Boyfriend Application</h1>
@@ -401,36 +475,45 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
         {/* Decision Section */}
         <div className="decision-section">
           <h2><span className="emoji" role="img" aria-label="ballot box">🗳️</span> Your Verdict:</h2>
-          {submissionStatus !== 'success' && (
+          
+          {submissionStatus === 'success' && animationType ? (
+            <p className={`submission-message ${submissionStatus}`}>{submissionMessage}</p>
+          ) : (
             <>
               <input 
                 type="text"
-                placeholder="Your Name"
-                className="name-input"
+                placeholder="Your Name (Required)"
+                className={`name-input ${submissionStatus === 'error' && !responderName.trim() ? 'error' : ''}`}
                 value={responderName}
-                onChange={(e) => setResponderName(e.target.value)}
+                onChange={(e) => {
+                  setResponderName(e.target.value);
+                  if (submissionStatus === 'error' && e.target.value.trim()) {
+                    setSubmissionStatus('idle'); // Clear error state once user starts typing
+                    setSubmissionMessage('');
+                  }
+                }}
                 disabled={submissionStatus === 'submitting'}
               />
               <div className="decision-buttons">
                 <button 
                   onClick={() => handleDecision('approved')} 
-                  disabled={submissionStatus === 'submitting' || !responderName.trim()}
+                  disabled={submissionStatus === 'submitting' || !responderName.trim()} // Disable if no name
                   className="approve"
                 >
-                  {submissionStatus === 'submitting' ? 'Submitting...' : 'Approve'}
+                  {submissionStatus === 'submitting' ? 'Processing...' : '❤️ Approve'}
                 </button>
                 <button 
                   onClick={() => handleDecision('denied')} 
-                  disabled={submissionStatus === 'submitting' || !responderName.trim()}
+                  disabled={submissionStatus === 'submitting' || !responderName.trim()} // Disable if no name
                   className="deny"
                 >
-                  {submissionStatus === 'submitting' ? 'Submitting...' : 'Deny'}
+                  {submissionStatus === 'submitting' ? 'Processing...' : '💔 Deny'}
                 </button>
               </div>
+              {submissionMessage && (
+                <p className={`submission-message ${submissionStatus}`}>{submissionMessage}</p>
+              )}
             </>
-          )}
-          {submissionMessage && (
-            <p className={`submission-message ${submissionStatus}`}>{submissionMessage}</p>
           )}
         </div>
       </div>
