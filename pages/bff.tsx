@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import React from 'react';
-import Image from 'next/image'; // Import next/image
 import { sanity } from '../src/sanity/lib/client'
 import { urlFor } from '../src/sanity/lib/sanityImage'; 
 
@@ -125,12 +124,10 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
 
         {profileImage && (
           <div className="profile-image-container">
-            <Image
-              src={urlFor(profileImage).url()} // Simplified src
+            <img
+              src={urlFor(profileImage).width(150).height(150).url()}
               alt="Tristan - Profile Picture"
-              width={150}
-              height={150}
-              objectFit="cover"
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
             />
           </div>
         )}
@@ -198,12 +195,10 @@ const BoyfriendResumePage: React.FC<BoyfriendResumePageProps> = ({ profileImage,
             <div className="gallery-container">
               {galleryImages.map((image, index) => (
                 <div key={index} className="gallery-image-container">
-                  <Image
-                    src={urlFor(image).url()} // Simplified src
+                  <img
+                    src={urlFor(image).width(180).height(180).url()}
                     alt={`Gallery image ${index + 1}`}
-                    width={180}
-                    height={180}
-                    objectFit="cover"
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                   />
                 </div>
               ))}
