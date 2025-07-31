@@ -4,20 +4,7 @@ export default {
   type: 'document',
   fields: [
     {
-       preview: {
-    select: {
-      title: 'title',
-      client: 'clientName',
-      media: 'mainImage'
-    },
-    prepare({title, client, media}: {title: string, client: string, media: any}) {
-      return {
-        title,
-        subtitle: `Client: ${client || 'Unknown'}`,
-        media
-      }
-    }
-  },
+      name: 'title',
       title: 'Project Title',
       type: 'string',
       description: 'Name of the completed project'
