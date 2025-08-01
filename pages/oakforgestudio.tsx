@@ -223,21 +223,12 @@ export default function OakforgeStudio() {
                                         className="bg-gray-900/80 backdrop-blur-sm rounded-xl overflow-hidden border border-amber-800/30 shadow-lg hover:shadow-amber-600/20 transition-all"
                                         variants={itemVariants}
                                     >
-                                        {item.mainImage && (
-                                            <div className="relative h-60 w-full overflow-hidden">
-                                                <Image
-                                                    src={urlFor(item.mainImage).width(800).height(480).url()}
-                                                    alt={item.title}
-                                                    fill
-                                                    className="object-cover transform hover:scale-105 transition-transform duration-500"
-                                                />
-                                                {item.featured && (
-                                                    <div className="absolute top-4 right-4 bg-amber-500 text-xs font-bold px-2 py-1 rounded-full text-gray-900">
-                                                        Featured
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
+                                        <motion.img
+                                            src={urlFor(item.mainImage).width(800).height(400).url()}
+                                            alt={item.title}
+                                            className="w-full h-48 object-cover"
+                                            transition={{ duration: 0.3 }}
+                                        />
 
                                         <div className="p-6">
                                             <div className="flex justify-between items-start mb-2">
