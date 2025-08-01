@@ -31,6 +31,34 @@ body {
   @apply bg-white text-black dark:bg-black dark:text-white overflow-x-hidden;
 }
 
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-indigo-400 to-purple-500 rounded-full transition-all duration-300;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gradient-to-b from-indigo-500 to-purple-600;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 #f3f4f6;
+}
+
+.dark * {
+  scrollbar-color: #8b5cf6 #1f2937;
+}
+
 /* Fix for gradient containers on iPad */
 @media (min-width: 768px) and (max-width: 1024px) {
   .gradient-bg {

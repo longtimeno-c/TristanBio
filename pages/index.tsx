@@ -64,16 +64,6 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* Live Event Section */}
-        <motion.div
-          className="bg-indigo-100 dark:bg-indigo-900 px-6 py-3 rounded-xl text-indigo-800 dark:text-indigo-200 shadow-md"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          🎙 <strong>Stream150:</strong> Not live right now – see you soon!
-        </motion.div>
-
         {/* Featured Projects Teaser */}
         <motion.div
           className="w-full max-w-2xl mt-6"
@@ -85,7 +75,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 gap-8 text-left">
             {/* Dummy projects - link to actual project page */}
             <ProjectCard title="Missile Wars" desc="Fast-paced multiplayer game with WebSockets & strategy." />
-            <ProjectCard title="Stream150" desc="Live stream toolkit, automation, and chaos. Built from scratch." />
+            <ProjectCard title="Advanced Tutoring" desc="All in one tutoring platform. For easy and simple services between student and teacher." />
           </div>
         </motion.div>
 
