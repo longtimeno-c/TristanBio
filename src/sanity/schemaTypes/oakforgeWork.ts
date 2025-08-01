@@ -16,12 +16,6 @@ export default {
       description: 'Detailed description of the project'
     },
     {
-      name: 'clientName',
-      title: 'Client Name',
-      type: 'string',
-      description: 'The client for whom the work was completed'
-    },
-    {
       name: 'completionDate',
       title: 'Completion Date',
       type: 'date',
@@ -125,13 +119,13 @@ export default {
   preview: {
     select: {
       title: 'title',
-      client: 'clientName',
+      projectType: 'projectType',
       media: 'mainImage'
     },
-    prepare({title, client, media}: { title: string; client: string; media: any }) {
+    prepare({title, projectType, media}: { title: string; projectType: string; media: any }) {
       return {
         title,
-        subtitle: `Client: ${client || 'Unknown'}`,
+        subtitle: `Type: ${projectType || 'Unknown'}`,
         media
       }
     }

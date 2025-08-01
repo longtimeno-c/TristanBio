@@ -1,5 +1,3 @@
-'use client'
-
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
@@ -12,7 +10,6 @@ type OakforgeWorkItem = {
     _id: string
     title: string
     description: string
-    clientName: string
     completionDate: string
     projectType: string
     technologies: string[]
@@ -37,7 +34,6 @@ export default function OakforgeStudio() {
         _id,
         title,
         description,
-        clientName,
         completionDate,
         projectType,
         technologies,
@@ -230,7 +226,7 @@ export default function OakforgeStudio() {
                                         {item.mainImage && (
                                             <div className="relative h-60 w-full overflow-hidden">
                                                 <Image
-                                                    src={urlFor(item.mainImage).url()}
+                                                    src={urlFor(item.mainImage).width(800).height(480).url()}
                                                     alt={item.title}
                                                     fill
                                                     className="object-cover transform hover:scale-105 transition-transform duration-500"
@@ -250,8 +246,6 @@ export default function OakforgeStudio() {
                                                     {item.projectType}
                                                 </span>
                                             </div>
-
-                                            <p className="text-sm text-gray-400 mb-2">Client: {item.clientName}</p>
 
                                             <p className="text-gray-300 mb-4 line-clamp-3">{item.description}</p>
 
