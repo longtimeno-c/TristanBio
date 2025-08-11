@@ -68,8 +68,8 @@ export const experiences: Experience[] = [
     },
     {
         id: 3,
-        role: 'Game Developer',
-        company: 'Missile Wars - One Gane Studio LLC',
+        role: 'Lead Developer - Missile Wars',
+        company: 'One Game One Studio LLC',
         period: '2023 - 2024',
         description: 'Developed and maintained a popular multiplayer mini-game with sophisticated game mechanics and cross-platform functionality.',
         highlights: [
