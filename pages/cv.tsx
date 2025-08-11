@@ -37,22 +37,6 @@ export interface Skills {
 export const experiences: Experience[] = [
     {
         id: 1,
-        role: 'Lead Developer',
-        company: 'Advanced Tutoring Platform - Oakforge Studios Ltd.',
-        period: '2025 - Present',
-        description: 'Developing a comprehensive learning management system connecting tutors and pupils with role-based access, real-time communication, and secure payment processing.',
-        highlights: [
-            'Built a secure access code system for invitation-based registration with email verification',
-            'Implemented role-based dashboards with custom interfaces for Admin, Tutor, Pupil, and Parent users',
-            'Developed real-time communication features including messaging, video calls, and notifications using Socket.IO',
-            'Created advanced scheduling with recurring sessions, conflict detection and iCal export',
-            'Integrated Stripe payment processing for tutoring services with financial reporting',
-            'Designed cross-platform mobile application using React Native and Expo',
-        ],
-        tech: ['React Native', 'TypeScript', 'Node.js', 'Express', 'Redux', 'Socket.IO', 'Daily.co', 'Stripe', 'Expo', 'PostgreSQL', 'Prisma']
-    },
-    {
-        id: 2,
         role: 'Co-Founder & Lead Developer',
         company: 'Oakforge Studios Ltd.',
         period: '2024 - Present',
@@ -67,7 +51,7 @@ export const experiences: Experience[] = [
         tech: ['TypeScript', 'React Native', 'Node.js', 'Next.js', 'TailwindCSS', 'Sanity CMS', 'PostgreSQL', 'Express', 'Prisma'] 
     },
     {
-        id: 3,
+        id: 2,
         role: 'Lead Developer - Missile Wars',
         company: 'One Game One Studio LLC',
         period: '2023 - 2024',
@@ -82,7 +66,7 @@ export const experiences: Experience[] = [
         tech: ['Java', 'JavaScript', 'Server Architecture', 'Game Design', 'UI/UX Design', 'Multiplayer Systems']
     },
     {
-        id: 4,
+        id: 3,
         role: 'IT Systems Developer',
         company: 'Southampton University - Muvis Department',
         period: '2023',
@@ -97,7 +81,7 @@ export const experiences: Experience[] = [
         tech: ['Icinga2', 'Cacti', 'Infrastructure Monitoring', 'Linux Systems', 'Network Management']
     },
     {
-        id: 5,
+        id: 4,
         role: 'Development Team Member',
         company: 'Minecraft Middle Earth',
         period: '2022 - 2023',
@@ -112,7 +96,7 @@ export const experiences: Experience[] = [
         tech: ['Server Management', 'Game Development', 'Resource Pack Development', 'Community Management', 'Java', 'Git']
     },
     {
-        id: 6,
+        id: 5,
         role: 'Website Manager',
         company: 'Taunton Deane Swimming Club',
         period: '2022 - 2024',
