@@ -45,12 +45,27 @@ export const experiences: Experience[] = [
             'Creating an online platform for tutoring and educational resources',
             'Video calling and screensharing across multiple platforms',
             'Expo web app used to allow page switching while on a call',
-            'Payment intergration with Stripe for billing and payment processing',
+            'Payment integration with Stripe for billing and payment processing',
         ],
-        tech: ['TypeScript', 'React Native', 'Node.js', 'Expo', 'DailyCo']
+        tech: ['TypeScript', 'React Native', 'Node.js', 'Expo', 'DailyCo', 'Stripe']
     },
     {
         id: 2,
+        role: 'Full‑Stack Developer (Contract)',
+        company: 'Progress UK',
+        period: '2024 - 2025',
+        description: 'Built and operated a full‑stack web platform covering onboarding, subscriptions, events, newsroom, and admin tools.',
+        highlights: [
+            'Implemented Stripe subscriptions: Checkout, Billing Portal, webhooks, and subscription lifecycle',
+            'Designed Express API with Prisma/PostgreSQL and JWT auth',
+            'Expo Router (React Native Web) frontend with auth, newsroom, events, and policy editing',
+            'Integrated Resend email, Discord bot linking, and GitHub App for policy repos',
+            'Automated web deploys via GitHub Actions to VPS; optional Vercel configs'
+        ],
+        tech: ['TypeScript', 'Expo Router', 'React Native Web', 'Express', 'Prisma', 'PostgreSQL', 'Stripe', 'Resend', 'GitHub', 'Discord', 'Cloudflare Turnstile']
+    },
+    {
+        id: 3,
         role: 'CEO & Lead Developer',
         company: 'One Studio One Game, LLC',
         period: '2023 - 2024',
@@ -64,7 +79,7 @@ export const experiences: Experience[] = [
         tech: ['TypeScript', 'React Native', 'AI', 'Node.js', 'Expo', 'PostgreSQL', 'Express', 'Prisma'] 
     },
     {
-        id: 3,
+        id: 4,
         role: 'IT Systems Developer',
         company: 'Southampton University - Muvis Department',
         period: '2023',
@@ -77,7 +92,7 @@ export const experiences: Experience[] = [
         tech: ['Icinga2', 'Cacti', 'Infrastructure Monitoring']
     },
     {
-        id: 4,
+        id: 5,
         role: 'Development Team Member',
         company: 'Minecraft Middle Earth',
         period: '2022 - 2023',
@@ -90,7 +105,7 @@ export const experiences: Experience[] = [
         tech: ['Server Management', 'Resource Pack Development', 'Community Management']
     },
     {
-        id: 5,
+        id: 6,
         role: 'Website Manager',
         company: 'Taunton Deane Swimming Club',
         period: '2022 - 2024',
@@ -146,11 +161,13 @@ export const skills: Skills = {
         { name: 'TypeScript/JavaScript', level: 85 },
         { name: 'React Native', level: 85 },
         { name: 'Node.js', level: 80 },
+        { name: 'Stripe (Payments/Billing)', level: 92 },
         { name: 'Infrastructure Management', level: 75 },
         { name: 'AI/ML', level: 70 }
     ],
     tools: [
         { name: 'Git & Version Control', level: 85 },
+        { name: 'Stripe Webhooks/Checkout', level: 90 },
         { name: 'Icinga2/Cacti', level: 80 },
         { name: 'Server Administration', level: 85 },
         { name: 'Resource Pack Development', level: 75 }
