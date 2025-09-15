@@ -20,32 +20,49 @@ export default function Projects() {
 
   useEffect(() => {
     async function loadData() {
-      const sanityData = await sanity.fetch(
-        `*[_type == "project"] | order(_createdAt desc) {
-          _id,
-          title,
-          description,
-          link,
-          detailsLink,
-          tech,
-          mainImage
-        }`
-      )      
+      try {
+        const sanityData = await sanity.fetch(
+          `*[_type == "project"] | order(_createdAt desc) {
+            _id,
+            title,
+            description,
+            link,
+            detailsLink,
+            tech,
+            mainImage
+          }`
+        )
 
-      const githubRes = await fetch('https://api.github.com/users/longtimeno-c/repos')
-      const githubData = await githubRes.json()
+        if (Array.isArray(sanityData)) {
+          setSanityProjects(sanityData)
+        } else {
+          setSanityProjects([])
+        }
 
-      const githubMapped: Project[] = githubData.map((repo: any) => ({
-        _id: `github-${repo.id}`,
-        title: repo.name,
-        description: repo.description || 'No description provided.',
-        link: repo.html_url,
-        tech: [],
-        source: 'github',
-      }))
-
-      setSanityProjects(sanityData)
-      setGithubProjects(githubMapped)
+        const githubRes = await fetch('https://api.github.com/users/longtimeno-c/repos')
+        if (githubRes.ok) {
+          const githubData = await githubRes.json()
+          if (Array.isArray(githubData)) {
+            const githubMapped: Project[] = githubData.map((repo: any) => ({
+              _id: `github-${repo.id}`,
+              title: repo.name,
+              description: repo.description || 'No description provided.',
+              link: repo.html_url,
+              tech: [],
+              source: 'github',
+            }))
+            setGithubProjects(githubMapped)
+          } else {
+            setGithubProjects([])
+          }
+        } else {
+          setGithubProjects([])
+        }
+      } catch (error) {
+        console.error('Error loading data:', error)
+        setSanityProjects([])
+        setGithubProjects([])
+      }
     }
 
     loadData()
