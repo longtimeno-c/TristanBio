@@ -52,6 +52,21 @@ export const experiences: Experience[] = [
     },
     {
         id: 2,
+        role: 'Full-Stack Developer (Contract)',
+        company: 'Progress UK',
+        period: '2024 - 2025',
+        description: 'Delivered a full‑stack web platform for Progress UK, covering onboarding, authentication, events, newsroom, subscriptions, policy editing, Discord linking, and admin tools.',
+        highlights: [
+            'Implemented Stripe subscriptions: Checkout sessions, Billing Portal, webhooks, and subscription lifecycle management',
+            'Built Express API with Prisma/PostgreSQL and JWT authentication',
+            'Developed Expo Router (React Native Web) frontend: auth flows, newsroom, events, and GitHub-backed policy editing',
+            'Integrated Resend for transactional email and Discord bot for role linking',
+            'Automated builds and deploys via GitHub Actions to VPS with optional Vercel configs'
+        ],
+        tech: ['TypeScript', 'Expo Router', 'React Native Web', 'Express', 'Prisma', 'PostgreSQL', 'Stripe', 'Resend', 'Discord', 'GitHub App', 'Cloudflare Turnstile']
+    },
+    {
+        id: 3,
         role: 'Lead Developer - Missile Wars',
         company: 'One Game One Studio LLC',
         period: '2023 - 2024',
@@ -119,10 +134,10 @@ export const education: Education[] = [
         school: 'Taunton School',
         period: '2019 - 2025',
         subjects: [
-            'Computer Science (Predicted A*)',
-            'Mathematics (Predicted B)',
-            'Geography (Predicted B)',
-            'EPQ'
+            'Computer Science (C)',
+            'Mathematics (C)',
+            'Geography (C)',
+            'EPQ (B)'
         ],
         achievements: [
             'Computer Science Scholarship Recipient',
@@ -156,6 +171,7 @@ export const skills: Skills = {
         { name: 'Next.js', level: 85 },
         { name: 'Python', level: 80 },
         { name: 'PostgreSQL/Prisma', level: 80 },
+        { name: 'Stripe (Payments/Billing)', level: 92 },
         { name: 'TailwindCSS', level: 85 },
         { name: 'Socket.IO/WebSockets', level: 80 },
         { name: 'Redux/State Management', level: 75 },
@@ -167,7 +183,7 @@ export const skills: Skills = {
         { name: 'Expo', level: 85 },
         { name: 'Sanity CMS', level: 80 },
         { name: 'Server Administration', level: 75 },
-        { name: 'Payment APIs (Stripe)', level: 75 },
+        { name: 'Stripe Webhooks/Checkout/Billing Portal', level: 90 },
         { name: 'Daily.co Video Integration', level: 80 },
         { name: 'Icinga2/Cacti', level: 70 },
         { name: 'Game Development', level: 75 }

@@ -19,6 +19,12 @@ export default {
       type: 'url',
     },
     {
+      name: 'detailsLink',
+      title: 'Project Details Link (optional)',
+      type: 'url',
+      description: 'Optional internal or external URL for a detailed project page',
+    },
+    {
       name: 'tech',
       title: 'Technologies',
       type: 'array',

@@ -8,6 +8,7 @@ type Project = {
   title: string
   description: string
   link: string
+  detailsLink?: string
   tech: string[]
   mainImage?: any
   source?: 'sanity' | 'github'
@@ -25,6 +26,7 @@ export default function Projects() {
           title,
           description,
           link,
+          detailsLink,
           tech,
           mainImage
         }`

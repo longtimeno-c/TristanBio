@@ -6,20 +6,18 @@ type ProjectProps = {
   title: string
   description: string
   link: string
+  detailsLink?: string
   tech: string[]
   mainImage?: any
   source?: 'sanity' | 'github'
 }
 
-export default function ProjectCard({ title, description, link, tech, mainImage, source }: ProjectProps) {
+export default function ProjectCard({ title, description, link, detailsLink, tech, mainImage, source }: ProjectProps) {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
-    <motion.a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative block rounded-xl overflow-hidden cursor-pointer transform transition-transform"
+    <motion.div
+      className="group relative rounded-xl overflow-hidden cursor-pointer transform transition-transform h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -5 }}
@@ -31,7 +29,7 @@ export default function ProjectCard({ title, description, link, tech, mainImage,
       <div className="absolute inset-0 rounded-xl p-[1px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-70 
                     group-hover:opacity-100 transition-opacity duration-300"></div>
       
-      <div className="relative bg-white dark:bg-gray-800 rounded-[10px] h-full">
+      <div className="relative bg-white dark:bg-gray-800 rounded-[10px] h-full flex flex-col">
         {/* Glass-like hover effect */}
         <motion.div 
           className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 
@@ -69,7 +67,9 @@ export default function ProjectCard({ title, description, link, tech, mainImage,
           </div>
         )}
         
-        <div className="p-6 relative">
+        {/* Details area pinned bottom-left within flexible space */}
+        <div className="p-6 relative flex-1 flex items-end">
+          <div>
           {/* Title with animated underline effect */}
           <div className="relative inline-block mb-3">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{title}</h2>
@@ -98,21 +98,30 @@ export default function ProjectCard({ title, description, link, tech, mainImage,
               </motion.span>
             ))}
           </div>
+          </div>
         </div>
         
-        {/* Call to action button */}
-        <div className="px-6 pb-4 flex justify-end">
-          <motion.div
-            className="text-xs text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1"
-            animate={{
-              x: isHovered ? 3 : 0
-            }}
-          >
-            View Project 
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </motion.div>
+        {/* Footer CTAs */}
+        <div className="px-6 pb-4 flex items-center justify-between gap-3">
+          {detailsLink && (
+            <a
+              href={detailsLink}
+              className="text-xs text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 font-medium"
+            >
+              Project details
+            </a>
+          )}
+          <a href={link} target="_blank" rel="noopener noreferrer" className="ml-auto">
+            <motion.div
+              className="text-xs text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1"
+              animate={{ x: isHovered ? 3 : 0 }}
+            >
+              View Project 
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.div>
+          </a>
         </div>
       </div>
       
@@ -121,6 +130,6 @@ export default function ProjectCard({ title, description, link, tech, mainImage,
         className="absolute -inset-1 rounded-xl bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 blur opacity-0 
                   group-hover:opacity-100 -z-10 transition-opacity duration-300" 
       />
-    </motion.a>
+    </motion.div>
   )
 }
