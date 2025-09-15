@@ -1,0 +1,16 @@
+{
+  "name": "Tristan's Portfolio",
+  "short_name": "TristanBio",
+  "description": "Software dev, and all-around legend. Explore my work, code, and chaos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

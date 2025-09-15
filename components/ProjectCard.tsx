@@ -106,6 +106,8 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
           {detailsLink && (
             <a
               href={detailsLink}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 font-medium"
             >
               Project details
