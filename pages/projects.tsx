@@ -34,7 +34,11 @@ export default function Projects() {
         )
 
         if (Array.isArray(sanityData)) {
-          setSanityProjects(sanityData)
+          const normalized = sanityData.map((p: any) => ({
+            ...p,
+            tech: Array.isArray(p?.tech) ? p.tech : [],
+          }))
+          setSanityProjects(normalized)
         } else {
           setSanityProjects([])
         }

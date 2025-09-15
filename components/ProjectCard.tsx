@@ -7,7 +7,7 @@ type ProjectProps = {
   description: string
   link: string
   detailsLink?: string
-  tech: string[]
+  tech?: string[]
   mainImage?: any
   source?: 'sanity' | 'github'
 }
@@ -85,7 +85,7 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
           
           {/* Tech tags with staggered animation */}
           <div className="flex flex-wrap gap-2">
-            {tech.map((item, i) => (
+            {(tech ?? []).map((item, i) => (
               <motion.span
                 key={i}
                 className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-300/20 
