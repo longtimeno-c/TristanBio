@@ -31,6 +31,34 @@ body {
   @apply bg-white text-black dark:bg-black dark:text-white overflow-x-hidden;
 }
 
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-indigo-400 to-purple-500 rounded-full transition-all duration-300;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gradient-to-b from-indigo-500 to-purple-600;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 #f3f4f6;
+}
+
+.dark * {
+  scrollbar-color: #8b5cf6 #1f2937;
+}
+
 /* Fix for gradient containers on iPad */
 @media (min-width: 768px) and (max-width: 1024px) {
   .gradient-bg {
@@ -52,4 +80,49 @@ body {
     background-attachment: scroll;
     background-size: 100% 100%;
   }
+}
+
+/* Animation classes for UI improvements */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-slower {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-slower {
+  animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Border image for gradient borders */
+.border-gradient-pulse {
+  border-image: linear-gradient(to bottom, rgba(99, 102, 241, 0.6), rgba(168, 85, 247, 0.4)) 1;
 }
