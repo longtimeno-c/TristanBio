@@ -14,6 +14,11 @@ type ProjectProps = {
 
 export default function ProjectCard({ title, description, link, detailsLink, tech, mainImage, source }: ProjectProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const handleCardClick = () => {
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer')
+    }
+  }
   
   return (
     <motion.div
@@ -24,15 +29,18 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       transition={{ duration: 0.3 }}
+      onClick={handleCardClick}
+      role="link"
+      tabIndex={0}
     >
       {/* Card background with border gradient */}
-      <div className="absolute inset-0 rounded-xl p-[1px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-70 
+      <div className="pointer-events-none absolute inset-0 rounded-xl p-[1px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-70 
                     group-hover:opacity-100 transition-opacity duration-300"></div>
       
       <div className="relative bg-white dark:bg-gray-800 rounded-[10px] h-full flex flex-col">
         {/* Glass-like hover effect */}
         <motion.div 
-          className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 opacity-0 
                      group-hover:opacity-100 transition-opacity duration-300 rounded-[10px]" 
         />
         
@@ -40,7 +48,7 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
         {mainImage && (
           <div className="relative w-full h-48 overflow-hidden">
             <motion.div
-              className="absolute inset-0 bg-black/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="pointer-events-none absolute inset-0 bg-black/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity"
             />
             <motion.img
               src={urlFor(mainImage).width(800).height(400).url()}
@@ -109,11 +117,12 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 font-medium"
+              onClick={(e) => e.stopPropagation()}
             >
               Project details
             </a>
           )}
-          <a href={link} target="_blank" rel="noopener noreferrer" className="ml-auto">
+          <a href={link} target="_blank" rel="noopener noreferrer" className="ml-auto" onClick={(e) => e.stopPropagation()}>
             <motion.div
               className="text-xs text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1"
               animate={{ x: isHovered ? 3 : 0 }}
@@ -129,7 +138,7 @@ export default function ProjectCard({ title, description, link, detailsLink, tec
       
       {/* Card shadow glow effect */}
       <motion.div 
-        className="absolute -inset-1 rounded-xl bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 blur opacity-0 
+        className="pointer-events-none absolute -inset-1 rounded-xl bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 blur opacity-0 
                   group-hover:opacity-100 -z-10 transition-opacity duration-300" 
       />
     </motion.div>
