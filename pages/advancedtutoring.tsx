@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import Navbar from '@/components/Navbar'
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { sanity } from '../src/sanity/lib/client'
 import { urlFor } from '../src/sanity/lib/sanityImage'
 
@@ -24,114 +23,129 @@ type AdvancedTutoringProject = {
     featured: boolean
 }
 
-// Timeline data showcasing the development process
-const timelineData = [
+// Technical breakdown modules
+const technicalModules = [
     { 
-        id: 1, 
-        title: 'Access Code System',
-        description: 'Invitation-based registration using secure access codes with email verification',
-        tech: ['Node.js', 'JWT', 'JSON Storage'],
-        phase: 'Authentication'
+        id: 'backend', 
+        title: 'Backend & Security',
+        phase: 'Core Architecture',
+        description: 'Built on Node.js, Express, and PostgreSQL (Prisma). Features a unique "Access Code" onboarding flow where registration is impossible without a valid code. Codes carry metadata to automatically link parents to children. Includes device fingerprinting and "impersonation" mode for admins to debug user issues.',
+        tech: ['Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Turnstile'],
+        details: [
+            "Registration is impossible without a valid AccessCode.",
+            "Smart Metadata in codes automatically links parents to children.",
+            "Admins can 'impersonate' users via query params for debugging.",
+            "Sensitive data stripping in eventController.js for privacy."
+        ]
     },
     { 
-        id: 2, 
-        title: 'User Management',
-        description: 'Multiple user roles: Admin, Tutor, Pupil, and Parent with specialized permissions',
-        tech: ['React', 'TypeScript', 'Redux'],
-        phase: 'Core Features'
+        id: 'ai', 
+        title: 'AI Tutor+ (Socratic)',
+        phase: 'Artificial Intelligence',
+        description: 'A premium subscription service that acts as a Socratic tutor. The system prompt explicitly instructs the AI to guide learning through questioning. It injects full assignment context (text, due dates) into the prompt and uses Multi-Modal analysis for PDFs and images.',
+        tech: ['OpenAI GPT-4o', 'Vector Embeddings', 'pdf-parse', 'mammoth', 'Vision API'],
+        details: [
+            "System prompt enforces Socratic method: guide, don't answer.",
+            "Context Injection: AI knows the assignment details and due dates.",
+            "Multi-Modal: Parses PDFs, Word docs, and images (handwriting/formulas).",
+            "Admin AI: Verifies tutor credentials (DBS, degrees) with fraud detection."
+        ]
     },
     { 
-        id: 3, 
-        title: 'Role-Based Dashboards',
-        description: 'Custom interfaces for each user role with dark/light mode support',
-        tech: ['Next.js', 'TailwindCSS', 'React Query'],
-        phase: 'UI/UX'
+        id: 'video', 
+        title: 'Video Classroom',
+        phase: 'Real-Time Comms',
+        description: 'Fully integrated classroom environment built on WebRTC (Daily.co). Features dedicated screen sharing, Picture-in-Picture (PiP) to browse assignments while calling, and automatic bandwidth management.',
+        tech: ['Daily.co', 'WebRTC', 'Socket.IO', 'Screen Sharing'],
+        details: [
+            "Picture-in-Picture allows browsing assignments while in a call.",
+            "Dedicated screen sharing video element.",
+            "Automatic bandwidth management for video quality.",
+            "Permission Matrix ensures safe communication channels."
+        ]
     },
     { 
-        id: 4, 
-        title: 'Communication System',
-        description: 'Direct messaging, video calls, and system notifications with Socket.IO',
-        tech: ['WebSocket', 'Socket.IO', 'Push Notifications'],
-        phase: 'Communication'
+        id: 'finance', 
+        title: 'Financial Infrastructure',
+        phase: 'Payments',
+        description: 'Marketplace model using Stripe Connect for tutor payouts and RevenueCat for cross-platform subscription management. The system tracks KYC status and enforces service fees automatically.',
+        tech: ['Stripe Connect', 'RevenueCat', 'Webhooks', 'KYC Compliance'],
+        details: [
+            "Tutors have Stripe Connect Express accounts for direct payouts.",
+            "Platform takes a configurable service fee automatically.",
+            "RevenueCat syncs subscription status across iOS, Android, and Web.",
+            "Enforces KYC compliance before enabling payouts."
+        ]
     },
     { 
-        id: 5, 
-        title: 'Calendar Integration',
-        description: 'Advanced scheduling with recurring sessions, conflict detection, and iCal export',
-        tech: ['FullCalendar', 'date-fns', 'iCal'],
-        phase: 'Scheduling'
+        id: 'frontend', 
+        title: 'Frontend Engineering',
+        phase: 'User Experience',
+        description: 'Built with Expo (React Native) and TypeScript. Uses "Provider Hell" pattern for global state (Auth, Socket, Call) and optimistic updates for a snappy feel. Includes Haptics for tactile feedback.',
+        tech: ['React Native', 'Expo', 'TypeScript', 'NativeWind', 'Reanimated'],
+        details: [
+            "SocketContext maintains connections across navigation.",
+            "CallContext manages active call state (minimized/fullscreen).",
+            "Optimistic updates for immediate UI feedback.",
+            "Haptics integration for tactile feedback."
+        ]
     },
     { 
-        id: 6, 
-        title: 'Progress Tracking',
-        description: 'Notes system and activity logs to track tutoring progress and development',
-        tech: ['Chart.js', 'JSON Storage', 'Redux'],
-        phase: 'Tutoring Tools'
-    },
-    { 
-        id: 7, 
-        title: 'Financial Management',
-        description: 'Payment tracking, service charges, and detailed financial reporting',
-        tech: ['Payment APIs', 'Financial Reports', 'Receipts'],
-        phase: 'Payments'
-    },
-    { 
-        id: 8, 
-        title: 'Mobile Development',
-        description: 'Cross-platform React Native app for web, iOS, and Android',
-        tech: ['React Native', 'Expo', 'Push Notifications'],
-        phase: 'Mobile'
-    },
-    {
-        id: 9,
-        title: 'Admin Tools',
-        description: 'User management, access code generation, and system monitoring',
-        tech: ['Admin Dashboard', 'Analytics', 'User Management'],
-        phase: 'Administration'
+        id: 'infra', 
+        title: 'Infra & Storage',
+        phase: 'Infrastructure',
+        description: 'Scalable infrastructure with smart file storage using SHA-256 deduplication. Includes role-based storage quotas (up to 100TB for Admins) and automated cron jobs for maintenance and reminders.',
+        tech: ['@vercel/blob', 'node-cron', 'Redis', 'SHA-256 Hashing'],
+        details: [
+            "Smart Storage: SHA-256 hashing for file deduplication.",
+            "Role-based storage quotas (e.g., 100TB for Admins).",
+            "Cron jobs for session reminders and cleanup.",
+            "CSRF protection and secure headers (Helmet)."
+        ]
     }
 ]
 
 // Key features of the platform
 const features = [
     {
-        title: 'Multiple User Roles',
-        description: 'Admin, Tutor, Pupil, and Parent roles with specific permissions and interfaces',
+        title: 'Role-Based Ecosystem',
+        description: 'Secure hierarchy linking Parents, Pupils, and Tutors with strict permission matrices.',
         icon: '👥'
     },
     {
-        title: 'Access Code System',
-        description: 'Invitation-based registration system with secure code generation and management',
-        icon: '🔒'
+        title: 'Socratic AI Tutor',
+        description: 'AI that guides learning via questioning, with full context of assignments and files.',
+        icon: '🧠'
     },
     {
-        title: 'Comprehensive Communication',
-        description: 'Messaging, video calls, notifications, and real-time updates with Socket.IO',
-        icon: '💬'
+        title: 'Smart Access Codes',
+        description: 'Invitation-only onboarding with metadata that auto-links family accounts.',
+        icon: '🔐'
     },
     {
-        title: 'Advanced Scheduling',
-        description: 'Calendar with recurring sessions, rescheduling requests and iCal integration',
-        icon: '📅'
+        title: 'Video Classroom',
+        description: 'Integrated WebRTC calls with Screen Share and Picture-in-Picture mode.',
+        icon: '📹'
     },
     {
-        title: 'Financial Tools',
-        description: 'Payment tracking, service charges, reports and receipt generation',
+        title: 'Stripe Connect',
+        description: 'Marketplace payments with automated split fees and tutor payouts.',
         icon: '💳'
     },
     {
-        title: 'Cross-Platform',
-        description: 'Web platform plus native mobile apps for iOS and Android via React Native',
-        icon: '🌐'
+        title: 'Cross-Platform Sync',
+        description: 'RevenueCat integration syncs subscriptions across Web, iOS, and Android.',
+        icon: '🔄'
     },
     {
-        title: 'Tutoring Progress Tools',
-        description: 'Notes system, activity logs and student development tracking',
-        icon: '📊'
+        title: 'Smart Storage',
+        description: 'Deduplicated file storage with SHA-256 hashing and role-based quotas.',
+        icon: '📂'
     },
     {
-        title: 'Parent-Child Accounts',
-        description: 'Parents can manage and oversee their children\'s tutoring activities',
-        icon: '👨‍👧‍👦'
+        title: 'Real-Time Context',
+        description: 'Socket.IO messaging with "sticky" headers and assignment attachments.',
+        icon: '💬'
     }
 ]
 
@@ -166,14 +180,14 @@ const userFlowSteps = [
 
 export default function AdvancedTutoring() {
     // Find first item in timeline data for initial selected feature
-    const [activePhase, setActivePhase] = useState('Authentication')
+    const [activePhase, setActivePhase] = useState('Core Architecture')
     const [projectData, setProjectData] = useState<AdvancedTutoringProject | null>(null)
     const [activeSlide, setActiveSlide] = useState(0)
     
     // Initialize selected feature based on active phase
-    const [selectedFeature, setSelectedFeature] = useState(() => {
-        const featuresInPhase = timelineData.filter(item => item.phase === 'Authentication');
-        return featuresInPhase.length > 0 ? featuresInPhase[0] : timelineData[0];
+    const [selectedFeature, setSelectedFeature] = useState<any>(() => {
+        const featuresInPhase = technicalModules.filter(item => item.phase === 'Core Architecture');
+        return featuresInPhase.length > 0 ? featuresInPhase[0] : technicalModules[0];
     })
     
     // Function to determine how many items are visible based on screen width
@@ -301,10 +315,10 @@ export default function AdvancedTutoring() {
                                     Platform Overview
                                 </h2>
                                 <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-                                    Built with modern web technologies, the Advanced Tutoring Platform revolutionizes online education by providing a secure, feature-rich environment for educational relationships to flourish.
+                                    Advanced Tutoring is a sophisticated, multi-role educational platform designed to bridge the gap between tutors, pupils, and parents. Unlike simple scheduling apps, it integrates a complete ecosystem of tools: real-time communication, AI-powered learning assistance, secure payments, and role-specific dashboards.
                                 </p>
                                 <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-                                    This Node.js/Express application with a React-Native (Expo) client offers comprehensive solutions for tutoring management, including role-based access control, real-time messaging, video calls, calendar scheduling, and secure payment processing.
+                                    <strong>Core Philosophy:</strong> The app is built around <em>relationships</em> (Parent-Child, Tutor-Pupil) and <em>permissions</em>, ensuring that every interaction is secure and context-aware.
                                 </p>
                                 
                                 {projectData?.links && projectData.links.length > 0 && (
@@ -475,7 +489,7 @@ export default function AdvancedTutoring() {
                         </div>
                     </motion.section>
 
-                    {/* Development Timeline */}
+                    {/* Technical Deep Dive */}
                     <motion.section
                         className="max-w-7xl mx-auto mb-24"
                         initial={{ opacity: 0, y: 20 }}
@@ -483,13 +497,13 @@ export default function AdvancedTutoring() {
                         transition={{ duration: 0.6, delay: 0.6 }}
                     >
                         <h2 className="text-3xl font-bold mb-12 text-center bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
-                            Development Journey
+                            Technical Deep Dive
                         </h2>
                         
                         {/* Phases Tabs - Improved design */}
                         <div className="flex justify-center mb-12 overflow-x-auto">
                             <div className="flex space-x-3 p-2 rounded-2xl bg-gradient-to-r from-indigo-50/80 to-purple-50/80 dark:from-indigo-900/20 dark:to-purple-900/20 backdrop-blur-sm shadow-lg">
-                                {Array.from(new Set(timelineData.map(item => item.phase))).map((phase) => (
+                                {Array.from(new Set(technicalModules.map(item => item.phase))).map((phase) => (
                                     <motion.button
                                         key={phase}
                                         className={`px-6 py-3 rounded-xl transition-all ${
@@ -500,7 +514,7 @@ export default function AdvancedTutoring() {
                                         onClick={() => {
                                             setActivePhase(phase);
                                             // Update selected feature to be the first item in the new phase
-                                            const featuresInPhase = timelineData.filter(item => item.phase === phase);
+                                            const featuresInPhase = technicalModules.filter(item => item.phase === phase);
                                             if (featuresInPhase.length > 0) {
                                                 setSelectedFeature(featuresInPhase[0]);
                                             }
@@ -533,11 +547,11 @@ export default function AdvancedTutoring() {
                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                                             </svg>
                                         </span>
-                                        Development Timeline
+                                        System Modules
                                     </h3>
                                     
                                     <div className="relative pl-10">
-                                        {timelineData
+                                        {technicalModules
                                             .filter(item => item.phase === activePhase)
                                             .map((item, index, filteredArray) => (
                                                 <motion.div
@@ -580,13 +594,8 @@ export default function AdvancedTutoring() {
                                                     >
                                                         <h4 className="font-bold text-lg text-gray-800 dark:text-white flex items-center">
                                                             {item.title}
-                                                            <span className={`ml-3 text-xs font-medium px-2 py-1 rounded-full ${
-                                                                selectedFeature.id === item.id
-                                                                    ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-800 dark:text-indigo-200'
-                                                                    : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-                                                            }`}>Phase {index + 1}</span>
                                                         </h4>
-                                                        <p className="text-gray-600 dark:text-gray-300 mt-2">
+                                                        <p className="text-gray-600 dark:text-gray-300 mt-2 line-clamp-2">
                                                             {item.description}
                                                         </p>
                                                         <div className="mt-3 flex flex-wrap gap-2">
@@ -635,16 +644,31 @@ export default function AdvancedTutoring() {
                                             </span>
                                         </div>
 
-                                        <p className="text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
+                                        <p className="text-gray-700 dark:text-gray-200 mb-6 leading-relaxed">
                                             {selectedFeature.description}
                                         </p>
+
+                                        {selectedFeature.details && (
+                                            <ul className="mb-8 space-y-3 bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
+                                                {selectedFeature.details.map((detail: string, i: number) => (
+                                                    <li key={i} className="flex items-start text-gray-600 dark:text-gray-300 text-sm">
+                                                        <span className="mr-2 mt-1 text-indigo-500 flex-shrink-0">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                                            </svg>
+                                                        </span>
+                                                        <span>{detail}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
 
                                         <div className="mb-8">
                                             <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
                                                 Technologies Used
                                             </h4>
                                             <div className="flex flex-wrap gap-3">
-                                                {selectedFeature.tech.map((tech, index) => (
+                                                {selectedFeature.tech.map((tech: string, index: number) => (
                                                     <motion.div
                                                         key={tech}
                                                         className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/30 dark:to-purple-900/30 border border-indigo-100 dark:border-indigo-700/50 px-4 py-2 rounded-lg shadow-sm"
@@ -656,12 +680,6 @@ export default function AdvancedTutoring() {
                                                         <span className="font-medium text-indigo-700 dark:text-indigo-300">{tech}</span>
                                                     </motion.div>
                                                 ))}
-                                            </div>
-                                        </div>
-
-                                        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                                                Feature ID: {selectedFeature.id}
                                             </div>
                                         </div>
                                     </motion.div>
@@ -693,22 +711,22 @@ export default function AdvancedTutoring() {
                                         {[
                                             {
                                                 category: 'Frontend Development',
-                                                techs: ['React Native', 'Expo', 'Redux', 'TailwindCSS'],
+                                                techs: ['React Native', 'Expo', 'TypeScript', 'NativeWind'],
                                                 icon: '💻'
                                             },
                                             {
                                                 category: 'Backend Services',
-                                                techs: ['Node.js', 'Express', 'JWT Authentication', 'RESTful API'],
+                                                techs: ['Node.js', 'Express', 'PostgreSQL', 'Prisma ORM'],
                                                 icon: '⚙️'
                                             },
                                             {
-                                                category: 'Database & ORM',
-                                                techs: ['PostgreSQL', 'Prisma', 'Redis Caching', 'Database Migrations'],
-                                                icon: '🗄️'
+                                                category: 'AI & Data',
+                                                techs: ['OpenAI GPT-4o', 'Vector Embeddings', 'Redis', 'Vision API'],
+                                                icon: '🧠'
                                             },
                                             {
                                                 category: 'Real-time Features',
-                                                techs: ['Socket.IO', 'WebSockets', 'Push Notifications', 'Expo Server SDK'],
+                                                techs: ['Socket.IO', 'WebRTC (Daily.co)', 'Push Notifications', 'Optimistic Updates'],
                                                 icon: '⚡'
                                             }
                                         ].map((stack, index) => (
@@ -751,24 +769,24 @@ export default function AdvancedTutoring() {
                                 <ul className="space-y-6">
                                     {[
                                         {
-                                            name: 'Stripe Payment Processing',
-                                            description: 'Secure payment handling for tutoring services with Stripe Connect for tutor accounts',
+                                            name: 'Stripe Connect',
+                                            description: 'Marketplace payments with split fees and automated tutor payouts',
                                             icon: '💳'
                                         },
                                         {
-                                            name: 'Daily.co Video Calls',
-                                            description: 'High-quality video conferencing for remote tutoring sessions',
+                                            name: 'RevenueCat',
+                                            description: 'Cross-platform subscription sync (iOS, Android, Web)',
+                                            icon: '🔄'
+                                        },
+                                        {
+                                            name: 'Daily.co',
+                                            description: 'WebRTC video infrastructure with screen sharing and bandwidth management',
                                             icon: '🎥'
                                         },
                                         {
-                                            name: 'Email Services',
-                                            description: 'Automated emails for verification, password resets, and notifications via SMTP/Resend',
-                                            icon: '📧'
-                                        },
-                                        {
-                                            name: 'iCalendar Integration',
-                                            description: 'Calendar exports compatible with Google Calendar, Apple Calendar and Outlook',
-                                            icon: '📅'
+                                            name: 'OpenAI & Vercel Blob',
+                                            description: 'GPT-4o for Socratic tutoring and scalable edge storage for files',
+                                            icon: '☁️'
                                         }
                                     ].map((integration, index) => (
                                         <motion.li
@@ -887,13 +905,13 @@ export default function AdvancedTutoring() {
                                         The Advanced Tutoring Platform uses a modern tech stack designed for performance, security, and scalability. It's built as a Node.js/Express application with a React Native (Expo) client that works across web and mobile platforms.
                                     </p>
                                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                        The backend is organized into specialized controllers for user management, messaging, scheduling, and payments. Data is stored in PostgreSQL using Prisma ORM for type-safe database access, with Redis handling caching needs.
+                                        The backend leverages <strong>Prisma ORM</strong> for complex relational queries and <strong>Redis</strong> for caching. The "Tutor+" AI system integrates <strong>OpenAI's GPT-4o</strong> with context injection to provide Socratic tutoring, while <strong>Daily.co</strong> powers the WebRTC video classroom.
                                     </p>
                                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                        Real-time features are powered by Socket.IO, enabling instant messaging and notifications. The platform integrates with Expo's push notification system to keep users updated on important events even when they're not actively using the app.
+                                        Real-time features are powered by <strong>Socket.IO</strong>, enabling instant messaging and notifications. Financial transactions are handled via <strong>Stripe Connect</strong> for marketplace payouts and <strong>RevenueCat</strong> for cross-platform subscription synchronization.
                                     </p>
                                     <p className="text-gray-600 dark:text-gray-300">
-                                        The application includes robust security measures with JWT authentication, secure access codes, email verification, and proper permission handling for data access across different user roles.
+                                        Security is paramount, with a custom "Access Code" onboarding flow, device fingerprinting, and strict role-based permission matrices ensuring data privacy for all users.
                                     </p>
                                 </div>
                             </div>
