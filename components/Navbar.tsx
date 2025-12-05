@@ -25,22 +25,22 @@ export default function Navbar() {
   ];
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 sm:pt-6 pointer-events-none">
       <motion.nav 
         className={`
           pointer-events-auto
-          flex items-center gap-2 px-2 rounded-full border
+          flex items-center gap-1 sm:gap-2 px-1 sm:px-2 rounded-full border
           backdrop-blur-md transition-all duration-300
           ${scrolled 
             ? 'bg-white/90 dark:bg-gray-900/90 border-gray-200/50 dark:border-gray-700/50 shadow-lg shadow-black/5 py-2' 
-            : 'bg-white/50 dark:bg-gray-900/50 border-transparent py-3'
+            : 'bg-white/50 dark:bg-gray-900/50 border-transparent py-2 sm:py-3'
           }
         `}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
       >
-        <Link href="/" className="px-4 font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+        <Link href="/" className="hidden md:block px-4 font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
           Tristan Hill
         </Link>
         
@@ -50,7 +50,7 @@ export default function Navbar() {
             
             return (
               <li key={link.path}>
-                <Link href={link.path} className="relative block px-4 py-1.5 text-sm font-medium transition-colors">
+                <Link href={link.path} className="relative block px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium transition-colors">
                   {isActive && (
                     <motion.div 
                       layoutId="activeTab"
@@ -67,7 +67,7 @@ export default function Navbar() {
           })}
         </ul>
 
-        <div className="pl-2 pr-2 border-l border-gray-200 dark:border-gray-700 ml-2">
+        <div className="pl-1 sm:pl-2 pr-1 sm:pr-2 border-l border-gray-200 dark:border-gray-700 ml-1 sm:ml-2">
           <DarkModeToggle />
         </div>
       </motion.nav>
